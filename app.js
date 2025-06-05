@@ -1,42 +1,42 @@
 // ****************** LOAD ENVIRONMENT VARIABLES ******************
-// Menggunakan package 'dotenv' untuk memuat variabel lingkungan (.env file)
-// agar konfigurasi seperti PORT dan MongoDB URI dapat digunakan secara aman.
+// Using the 'dotenv' package to load environment variables (.env file)
+// so that configurations like PORT and MongoDB URI can be used securely.
 require('dotenv').config(); 
 
-// Mengambil nilai MONGODB_URI dari environment variable setelah dotenv dimuat
+// Retrieve the MONGODB_URI value from environment variables after loading dotenv
 const MONGODB_URI = process.env.MONGODB_URI;
 
 // ****************** IMPORT MODULE ******************
-// Mengimpor Express sebagai framework web server
+// Importing Express as the web server framework
 const express = require('express');
 
-// Mengimpor fungsi koneksi MongoDB dari file konfigurasi database
+// Importing the MongoDB connection function from the database configuration file
 const connectDB = require('./config/database');
 
-// Membuat instance aplikasi Express
+// Creating an instance of the Express application
 const app = express();
 
 // ****************** SETUP PORT ******************
-// Mengambil nilai PORT dari environment variable, atau gunakan 3000 sebagai default
+// Getting the PORT value from environment variables, or use 3000 as default
 const PORT = process.env.PORT || 3000;
 
 // ****************** CONNECT TO MONGODB ******************
-// Memanggil fungsi connectDB untuk menghubungkan aplikasi ke database MongoDB
-// Pastikan connectDB menggunakan MONGODB_URI yang sudah didefinisikan
+// Calling the connectDB function to connect the app to the MongoDB database
+// Ensure connectDB uses the MONGODB_URI that has been defined
 connectDB(MONGODB_URI);
 
 // ****************** MIDDLEWARE ******************
-// Mengaktifkan middleware bawaan Express untuk parsing JSON pada request body
+// Enabling Express built-in middleware to parse JSON in request bodies
 app.use(express.json());
 
 // ****************** ROUTE EXAMPLE ******************
-// Membuat route GET pada root ('/') yang mengirimkan response sederhana
+// Creating a GET route at the root ('/') that sends a simple response
 app.get('/', (req, res) => {
   res.send('Hello from Express + Mongoose!');
 });
 
 // ****************** START SERVER ******************
-// Menjalankan server pada port yang telah ditentukan dan menampilkan pesan ke console
+// Starting the server on the specified port and logging a message to the console
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

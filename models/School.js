@@ -1,21 +1,19 @@
-// *************** IMPORT LIBRARY ***************
+// *************** IMPORT CORE ***************
 const mongoose = require('mongoose');
 
-// *************** START: Description of the section ***************
-// Define the schema for School
 const schoolSchema = new mongoose.Schema({
-  // School name (required)
+  // School's name for identification
   name: {
     type: String,
     required: true,
     trim: true,
   },
-  // School address (optional)
+  // School's address for additional data
   address: {
     type: String,
     default: '',
   },
-  // Soft delete field
+  // Soft delete field — if set, indicates the record is "deleted"
   deletedAt: {
     type: Date,
     default: null,
@@ -39,6 +37,5 @@ schoolSchema.virtual('students', {
 schoolSchema.set('toObject', { virtuals: true });
 schoolSchema.set('toJSON', { virtuals: true });
 
-// Export the School model
+// *************** EXPORT MODULE ***************
 module.exports = mongoose.model('School', schoolSchema);
-// *************** END: Description of the section ***************

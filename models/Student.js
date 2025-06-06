@@ -1,22 +1,20 @@
-// *************** IMPORT LIBRARY ***************
+// *************** IMPORT CORE ***************
 const mongoose = require('mongoose');
 
-// *************** START: Description of the section ***************
-// Define the schema for Student
 const studentSchema = new mongoose.Schema({
-  // Student's first name (required)
+  // Student's first name for identification
   firstName: {
     type: String,
     required: true,
     trim: true,
   },
-  // Student's last name (required)
+  // Student's last name for identification
   lastName: {
     type: String,
     required: true,
     trim: true,
   },
-  // Student's email (required, unique, lowercase)
+  // Student's email for identification
   email: {
     type: String,
     required: true,
@@ -24,19 +22,18 @@ const studentSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
   },
-  // Student's date of birth (optional)
+  // Student's date of birth for additional data
   dateOfBirth: {
     type: Date,
     default: null,
   },
-  // Reference to the School the student belongs to (required)
+  // Reference to the School the student belongs to
   schoolId: {
     type: mongoose.Schema.Types.ObjectId,
-    // Refers to the School model
     ref: 'School', 
     required: true,
   },
-  // Soft delete field
+  // Soft delete field — if set, indicates the record is "deleted"
   deletedAt: {
     type: Date,
     default: null,
@@ -46,6 +43,5 @@ const studentSchema = new mongoose.Schema({
     timestamps: true,
 });
 
-// Export the Student model
+// *************** EXPORT MODULE ***************
 module.exports = mongoose.model('Student', studentSchema);
-// *************** END: Description of the section ***************

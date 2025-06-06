@@ -1,23 +1,20 @@
-// *************** IMPORT LIBRARY ***************
+// *************** IMPORT CORE ***************
 const mongoose = require('mongoose');
 
-// *************** START: Description of the section ***************
-// Define the schema for User
 const userSchema = new mongoose.Schema({
-  // User's first name (required)
+  // User's first name for identification
   firstName: {
     type: String,
     required: true,
-    // Remove whitespace from both ends
     trim: true,
   },
-  // User's last name (required)
+  // User's last name for identification
   lastName: {
     type: String,
     required: true,
     trim: true,
   },
-  // User's email (required, unique, lowercase)
+  // User's email for identification
   email: {
     type: String,
     required: true,
@@ -25,12 +22,12 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
   },
-  // Password (required)
+  // Password for authentication
   password: {
     type: String,
     required: true,
   },
-  // Role of the user (e.g., admin, student) — required
+  // Role of the user (e.g., admin, student)
   role: {
     type: String,
     required: true,
@@ -45,6 +42,5 @@ const userSchema = new mongoose.Schema({
     timestamps: true,
 });
 
-// Export the User model
+// *************** EXPORT MODULE ***************
 module.exports = mongoose.model('User', userSchema);
-// *************** END: Description of the section ***************

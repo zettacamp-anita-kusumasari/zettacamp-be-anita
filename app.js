@@ -1,27 +1,49 @@
 // *************** IMPORT CORE ***************
-require('dotenv').config(); 
 const express = require('express');
-const connectDB = require('./config/database');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+// *************** Load environment variables from .env file
+dotenv.config();
+
+// *************** IMPORT CORE ***************
 const app = express();
+const PORT = process.env.PORT || 4000;
 
-// ****************** Retrieve the MONGODB_URI value from environment
-const MONGODB_URI = process.env.MONGODB_URI;
-
-// ****************** Setup PORT value from environment
-const PORT = process.env.PORT || 3000;
-
-// ****************** Calling the connectDB to connect the app with the MongoDB database
-connectDB(MONGODB_URI);
-
-// ****************** Enabling Express built-in middleware for parse JSON
+// *************** Middleware to parse incoming JSON requests
 app.use(express.json());
 
-// ****************** Creating a GET route to sends a simple response
-app.get('/', (req, res) => {
-  res.send('Hello from Express + Mongoose!');
-});
+// *************** Connect to MongoDB using Mongoose with connection string from .env
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('MongoDB connection error:', err));
 
-// ****************** Starting the server on the specified port and logging a message to the console
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// *************** Import Apollo Server middleware for Express
+const { ApolloServer } = require('apollo-server-express');
+// *************** Import GraphQL schema definitions
+const typeDefs = require('./graphql/schema');
+// *************** Import resolvers for schema
+const resolvers = require('./graphql/resolvers');
+
+// *************** Async function to start Apollo Server and integrate it with Express app
+async function startApolloServer() {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers
+  });
+
+  // *************** Start the Apollo server
+  await server.start();
+  // *************** Apply Apollo middleware to Express app
+  server.applyMiddleware({ app });
+
+  // *************** Start the Express server
+  app.listen(PORT, () => {
+    console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+  });
+}
+
+// *************** Invoke the function to launch server
+startApolloServer();

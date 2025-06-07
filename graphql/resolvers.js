@@ -5,22 +5,22 @@ const School = require('../models/School');
 
 const resolvers = {
   Query: {
-    // *************** To fetch all users
-    users: async () => await User.find({}),
+    // *************** User Queries (Soft Delete Aware) to fetch all users
+    users: async () => await User.find({ deletedAt: null }),
 
-    // *************** To fetch a single user by ID
-    user: async (_, { id }) => await User.findById(id),
+    // *************** User Queries (Soft Delete Aware) to fetch a single user by ID
+    user: async (_, { id }) => await User.findOne({ _id: id, deletedAt: null }),
 
-    // *************** To fetch all students
+    // *************** Student Queries to fetch all students
     students: async () => await Student.find({}),
 
-    // *************** To fetch a single student by ID
+    // *************** Student Queries to fetch a single student by ID
     student: async (_, { id }) => await Student.findById(id),
 
-    // *************** To fetch all schools
+    // *************** School Queries to fetch all schools
     schools: async () => await School.find({}),
 
-    // *************** To fetch a single school by ID
+    // *************** School Queries to fetch a single school by ID
     school: async (_, { id }) => await School.findById(id),
   },
 
@@ -33,7 +33,10 @@ const resolvers = {
 
     // *************** Update user by ID, returning the updated document
     updateUser: async (_, { id, ...updates }) => {
-      return await User.findByIdAndUpdate(id, updates, { new: true });
+      const user = await User.findOne({ _id: id, deletedAt: null });
+      if (!user) throw new Error('User not found or has been deleted');
+      Object.assign(user, updates);
+      return await user.save();
     },
 
     // *************** Soft delete a user by setting deletedAt to current date

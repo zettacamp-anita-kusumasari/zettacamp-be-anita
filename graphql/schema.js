@@ -14,6 +14,7 @@ const { gql } = require('apollo-server-express');
  * @property {String!} lastName - Last name of the user.
  * @property {String!} email - Email address of the user.
  * @property {String!} role - Role assigned to the user (e.g., admin, teacher).
+ * @property {String!} password - password of the user.
  * @property {Date} deletedAt - Timestamp for soft delete (null if not deleted).
  *
  * @type Student
@@ -46,6 +47,7 @@ const { gql } = require('apollo-server-express');
  *   @param {String!} lastName - Last name of the user.
  *   @param {String!} email - Email address of the user.
  *   @param {String!} role - Role of the user.
+ *   @param {String!} password - password of the user.
  *   @returns {User}
  *
  * @mutation updateUser - Update an existing user by ID.
@@ -54,6 +56,7 @@ const { gql } = require('apollo-server-express');
  *   @param {String} lastName - New last name (optional).
  *   @param {String} email - New email (optional).
  *   @param {String} role - New role (optional).
+ *   @param {String} password - New password (optional).
  *   @returns {User}
  *
  * @mutation deleteUser - Soft delete a user by ID.
@@ -105,6 +108,7 @@ const typeDefs = gql`
     lastName: String!
     email: String!
     role: String!
+    password: String!
     deletedAt: Date
   }
 
@@ -138,8 +142,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createUser(firstName: String!, lastName: String!, email: String!, role: String!): User
-    updateUser(id: ID!, firstName: String, lastName: String, email: String, role: String): User
+    createUser(firstName: String!, lastName: String!, email: String!, role: String!, password: String!): User
+    updateUser(id: ID!, firstName: String, lastName: String, email: String, role: String, password: String): User
     deleteUser(id: ID!): User
 
     createStudent(firstName: String!, lastName: String!, email: String!, dateOfBirth: Date, schoolId: ID!): Student

@@ -22,13 +22,13 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
   },
-  // Password for authentication
-  password: {
+  // Role of the user (e.g., admin, student)
+  role: {
     type: String,
     required: true,
   },
-  // Role of the user (e.g., admin, student)
-  role: {
+  // Password for authentication
+  password: {
     type: String,
     required: true,
   },

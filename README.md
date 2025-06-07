@@ -1,7 +1,7 @@
-# 1.1. Initial Backend Project Environment Setup
+# 1.4. Implement CRUD Resolvers for User Model
 
 ## Description:
-Set up the fundamental Node.js project, initialize version control, connect to a remote GitHub repository, configure a .gitignore file to exclude unnecessary files like node_modules, and integrate Express.js to establish the core HTTP server foundation for your API. This involves running npm init -y, git init, connecting your local repository to a new GitHub repository, creating a .gitignore file, and installing and setting up a basic Express application.
+Develop the GraphQL resolver functions for the User model to handle all Create, Read, Update, and Soft Delete (CRUD) operations. This includes implementing resolvers for queries to fetch lists of users and individual users by ID, and mutations to create, update, and soft delete user records, ensuring all interactions persist data using Mongoose and MongoDB.
 
 ## Acceptance Criteria:
-A Node.js project is initialized, connected to a GitHub repository, node_modules are ignored, and a basic Express.js server is running and accessible.
+GraphQL queries (GetAllUsers, GetOneUser(id: ID!)) and mutations (CreateUser, UpdateUser, DeleteUser) for the User model are fully functional and correctly interact with the database.

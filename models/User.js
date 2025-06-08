@@ -27,12 +27,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // Role of the user (e.g., admin, student)
+  // Role of the user
   role: {
     type: String,
     required: true,
   },
-  // Soft delete field — if set, indicates the record is "deleted"
+  // Soft delete field
   deletedAt: {
     type: Date,
     default: null,

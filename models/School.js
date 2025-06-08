@@ -33,9 +33,5 @@ schoolSchema.virtual('students', {
   foreignField: 'schoolId',
 });
 
-// Ensure virtuals are included when converting to JSON or plain objects
-schoolSchema.set('toObject', { virtuals: true });
-schoolSchema.set('toJSON', { virtuals: true });
-
 // *************** EXPORT MODULE ***************
 module.exports = mongoose.model('School', schoolSchema);

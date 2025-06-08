@@ -8,20 +8,12 @@ const app = express();
 const MONGODB_URI = process.env.MONGODB_URI;
 
 // ****************** Setup PORT value from environment
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 // ****************** Calling the connectDB to connect the app with the MongoDB database
 connectDB(MONGODB_URI);
 
-// ****************** Enabling Express built-in middleware for parse JSON
-app.use(express.json());
-
-// ****************** Creating a GET route to sends a simple response
-app.get('/', (req, res) => {
-  res.send('Hello from Express + Mongoose!');
-});
-
-// ****************** Starting the server on the specified port and logging a message to the console
+// ****************** Starting the server on the port and logging a message
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

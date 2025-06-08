@@ -15,9 +15,9 @@ const mongoose = require('mongoose');
  */
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/your-db-name';
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/zettacamp';
     const conn = await mongoose.connect(mongoURI);
-    console.log(`MongoDB Connected: ${conn.connection.host} / ${conn.connection.name}`);
+    console.log(`MongoDB Connected: ${conn.connection.host}/${conn.connection.name}`);
   } catch (error) {
     console.error('MongoDB connection failed:', error.message);
     process.exit(1);

@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // Soft delete field — if set, indicates the record is "deleted"
+  // Soft delete field
   deletedAt: {
     type: Date,
     default: null,

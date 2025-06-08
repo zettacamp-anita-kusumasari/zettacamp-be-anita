@@ -2,28 +2,25 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-// *************** Load environment variables from .env file
-dotenv.config();
-
-// *************** IMPORT CORE ***************
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// *************** Middleware to parse incoming JSON requests
-app.use(express.json());
+// *************** Load environment variables from .env file
+dotenv.config();
 
 // *************** Connect to MongoDB using Mongoose with connection string from .env
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
 
 // *************** Import Apollo Server middleware for Express
 const { ApolloServer } = require('apollo-server-express');
+
 // *************** Import GraphQL schema definitions
 const typeDefs = require('./graphql/schema');
+
 // *************** Import resolvers for schema
 const resolvers = require('./graphql/resolvers');
 
@@ -36,6 +33,7 @@ async function startApolloServer() {
 
   // *************** Start the Apollo server
   await server.start();
+
   // *************** Apply Apollo middleware to Express app
   server.applyMiddleware({ app });
 

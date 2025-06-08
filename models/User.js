@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // Role of the user (e.g., admin, student)
+  // Role of the user
   role: {
     type: String,
     required: true,

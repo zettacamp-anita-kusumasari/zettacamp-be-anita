@@ -23,12 +23,5 @@ const schoolSchema = new mongoose.Schema({
     timestamps: true,
 });
 
-// Define a virtual field to relate School with its Students
-schoolSchema.virtual('students', {
-  ref: 'Student',
-  localField: '_id',
-  foreignField: 'schoolId',
-});
-
 // *************** EXPORT MODULE ***************
 module.exports = mongoose.model('School', schoolSchema);
